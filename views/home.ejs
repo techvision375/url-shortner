@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center;">
+    <h1 style="color: #2196f3; font-size: 42px; margin-top: 40px; margin-bottom: 10px; text-align: center; font-weight: 600;">Short URL</h1>
+
+    <div style="width: 100%; max-width: 800px; background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 30px; margin: 20px; box-sizing: border-box;">
+        <h2 style="color: #555; font-size: 26px; margin-top: 0; margin-bottom: 30px; text-align: center; font-weight: 500;">Paste the URL to be shortened</h2>
+
+        <% if (locals.id) { %>
+        <p style="text-align: center; background-color: #e8f5fe; padding: 15px; border-radius: 4px; color: #0277bd; margin-bottom: 30px;">
+            URL Generated: <a href="http://localhost:8000/url/<%= id %>" style="color: #0277bd; font-weight: 500; text-decoration: none;">http://localhost:8000/url/<%= id %></a>
+        </p>
+        <% } %>
+
+        <form method="post" action="/url" style="display: flex; flex-direction: column;">
+            <div style="display: flex; width: 100%; margin-bottom: 20px;">
+                <input type="text" name="url" placeholder="Enter the link here" style="flex: 1; padding: 12px 15px; font-size: 16px; border: 1px solid #e0e0e0; border-radius: 4px 0 0 4px; outline: none;">
+                <button type="submit" style="background-color: #2196f3; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: 500;">Shorten URL</button>
+            </div>
+        </form>
+
+        <p style="text-align: center; color: #666; margin-top: 10px; font-size: 14px;">
+            ShortURL is a free tool to shorten URLs and generate short links<br>
+            URL shortener allows to create a shortened link making it easy to share
+        </p>
+    </div>
+
+    <div style="width: 100%; max-width: 800px; margin: 20px;">
+        <% if (locals.urls) { %>
+        <div style="background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 20px; margin-top: 20px;">
+            <h3 style="color: #555; margin-top: 0; margin-bottom: 15px;">Your shortened URLs</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead style="background-color: #f5f5f5;">
+                    <tr>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">S. No.</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">ShortID</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">Redirect</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% urls.forEach((url, index)=> { %>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;"><%= index + 1 %></td>
+                        <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;"><%= url.shortId %></td>
+                        <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;"><%= url.redirectURL %></td>
+                        <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;"><%= url.visitHistory.length %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+    </div>
+
+    <!-- You can add a premium features banner here that mimics the "Want More?" section seen in the screenshot -->
+    <div style="width: 100%; max-width: 800px; background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 30px; margin: 20px; box-sizing: border-box; text-align: center;">
+        <h2 style="color: #555; font-size: 24px; margin-top: 0; margin-bottom: 20px;">Want More? Try Premium Features!</h2>
+        <p style="color: #666; margin-bottom: 20px;">Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes.</p>
+    </div>
+</body>
+
+</html>
